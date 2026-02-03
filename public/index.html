@@ -294,15 +294,15 @@ tbody tr:hover {
       <div class="form-grid">
         <div class="form-group">
           <label for="roomId">Room ID</label>
-          <input type="text" id="roomId" placeholder="e.g. BLOCK-A-101" autocomplete="off" />
+          <input type="text" id="roomId" placeholder="e.g. BLOCK-A-101" autocomplete="off" value="BLOCK-A-101" />
         </div>
         <div class="form-group">
           <label for="capacity">Capacity</label>
-          <input type="number" id="capacity" placeholder="60" min="1" />
+          <input type="number" id="capacity" placeholder="60" min="1" value="60" />
         </div>
         <div class="form-group">
           <label for="floorNo">Floor Number</label>
-          <input type="number" id="floorNo" placeholder="0" min="0" />
+          <input type="number" id="floorNo" placeholder="0" min="0" value="0" />
         </div>
       </div>
       <div class="checkbox-row">
@@ -348,7 +348,7 @@ tbody tr:hover {
       <div class="alloc-input-row">
         <div class="form-group">
           <label for="totalStudents">Total Students</label>
-          <input type="number" id="totalStudents" placeholder="150" min="1" autocomplete="off" />
+          <input type="number" id="totalStudents" placeholder="150" min="1" autocomplete="off" value="150" />
         </div>
         <button class="btn btn--allocate" onclick="allocateExam()">Allocate Seats</button>
       </div>
