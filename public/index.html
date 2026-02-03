@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>College Exam Seat Planner</title>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet" />
+
+<style>
+  
+
+:root {
+  /* 🌸 Pastel Theme */
+  --clr-bg:          #fbf8ff;
+  --clr-surface:     #ffffff;
+  --clr-surface-alt: #f4efff;
+  --clr-border:      #e6ddf7;
+
+  --clr-text:        #3b3551;
+  --clr-text-muted:  #8c85a3;
+
+  --clr-accent:      #a78bfa;
+  --clr-accent-light:#ede9fe;
+
+  --clr-success:     #86cbb1;
+  --clr-success-bg:  #ecf9f5;
+
+  --clr-error:       #e89aa9;
+  --clr-error-bg:    #fdecef;
+
+  --clr-warn:        #f2b880;
+  --clr-warn-bg:     #fff3e8;
+
+  --radius:          16px;
+  --shadow-sm:       0 4px 10px rgba(170,150,210,.08);
+  --shadow-md:       0 8px 24px rgba(170,150,210,.12);
+
+  --font-display:    'Cormorant Garamond', serif;
+  --font-body:       'Quicksand', sans-serif;
+  --max-w:           780px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Top Accent */
+.top-bar {
+  height: 4px;
+  background: linear-gradient(90deg, #c4b5fd, #a78bfa, #c4b5fd);
+}
+
+header {
+  text-align: center;
+  padding: 56px 24px 40px;
+}
+
+header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--clr-accent);
+  margin-bottom: 10px;
+}
+
+header p {
+  color: var(--clr-text-muted);
+  font-size: .95rem;
+}
+
+main {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* Section Card */
+.section-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--clr-border);
+  background: var(--clr-surface-alt);
+}
+
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--clr-text);
+}
+
+.section-header p {
+  font-size: .85rem;
+  color: var(--clr-text-muted);
+}
+
+.section-body { padding: 24px 28px; }
+
+/* Forms */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.form-group input {
+  font-family: var(--font-body);
+  padding: 10px 14px;
+  border: 1.5px solid var(--clr-border);
+  border-radius: 10px;
+  background: #fff;
+  transition: .2s;
+}
+
+.form-group input:focus {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px var(--clr-accent-light);
+  outline: none;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  padding: 11px 26px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn--primary {
+  background: var(--clr-accent);
+  color: white;
+}
+
+.btn--primary:hover {
+  background: #8b5cf6;
+}
+
+.btn--allocate {
+  background: var(--clr-warn);
+  color: white;
+}
+
+.btn--allocate:hover {
+  background: #e09e58;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: var(--clr-accent);
+  color: white;
+}
+
+th, td {
+  padding: 12px 16px;
+  font-size: .9rem;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--clr-border);
+}
+
+tbody tr:hover {
+  background: var(--clr-accent-light);
+}
+
+/* Badges */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .75rem;
+}
+
+.badge--yes {
+  background: var(--clr-success-bg);
+  color: var(--clr-success);
+}
+
+.badge--no {
+  background: var(--clr-warn-bg);
+  color: var(--clr-warn);
+}
+
+/* Feedback */
+.feedback--success {
+  background: var(--clr-success-bg);
+  color: var(--clr-success);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.feedback--error {
+  background: var(--clr-error-bg);
+  color: var(--clr-error);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.error-panel {
+  background: var(--clr-error-bg);
+  color: var(--clr-error);
+  padding: 14px;
+  border-radius: 12px;
+}
+
+.stat-box {
+  background: var(--clr-surface-alt);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--clr-accent);
+}
+
+.site-footer {
+  text-align: center;
+  padding: 30px 15px;
+  margin-top: 60px;
+  background: var(--clr-surface-alt);
+  border-top: 1px solid var(--clr-border);
+  font-size: .9rem;
+  color: var(--clr-text-muted);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top-bar"></div>
+
+<header>
+  <h1>College Exam Seat Planner</h1>
+  <p>Manage classrooms and intelligently allocate exam seats...</p>
+</header>
+
+<main>
+
+  
+  <div class="section-card">
+    <div class="section-header">
+      <div class="icon icon--add">📝</div>
+      <div>
+        <h2>Register New Classroom</h2>
+        <p>Add and configure a classroom for upcoming examinations</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="roomId">Room ID</label>
+          <input type="text" id="roomId" placeholder="e.g. BLOCK-A-101" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label for="capacity">Capacity</label>
+          <input type="number" id="capacity" placeholder="60" min="1" />
+        </div>
+        <div class="form-group">
+          <label for="floorNo">Floor Number</label>
+          <input type="number" id="floorNo" placeholder="0" min="0" />
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="nearWashroom" />
+        <label for="nearWashroom">Near Washroom</label>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn--primary" onclick="addClassroom()">+ Add Classroom</button>
+      </div>
+      <div class="feedback" id="addFeedback"></div>
+    </div>
+  </div>
+
+  <!-- ─── 2. CLASSROOM LIST ───────────────────────────────────────────── -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="icon icon--list">🏫</div>
+      <div>
+        <h2>Classroom List</h2>
+        <p>All registered classrooms</p>
+      </div>
+    </div>
+    <div class="section-body" style="padding:0;">
+      <div id="classroomTable">
+        <div class="empty-state">
+          <span class="empty-icon">🪑</span>
+          No classrooms yet. Add one above to get started.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section-card">
+    <div class="section-header">
+      <div class="icon icon--alloc">🎓</div>
+      <div>
+        <h2>Allocate Exam Seats</h2>
+        <p>Greedy allocation – lower floor &amp; higher capacity first</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="alloc-input-row">
+        <div class="form-group">
+          <label for="totalStudents">Total Students</label>
+          <input type="number" id="totalStudents" placeholder="150" min="1" autocomplete="off" />
+        </div>
+        <button class="btn btn--allocate" onclick="allocateExam()">Allocate Seats</button>
+      </div>
+
+      
+      <div class="error-panel" id="allocError">
+        <span class="error-icon">⚠️</span>
+        <span id="allocErrorMsg"></span>
+      </div>
+
+      
+      <div class="result-panel" id="allocResult">
+        <div class="result-summary">
+          <div class="stat-box">
+            <div class="stat-value" id="statStudents">–</div>
+            <div class="stat-label">Students</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="statRooms">–</div>
+            <div class="stat-label">Rooms Used</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="statSeats">–</div>
+            <div class="stat-label">Total Seats</div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="alloc-table">
+            <thead>
+              <tr>
+                <th>Room ID</th>
+                <th>Floor</th>
+                <th>Capacity</th>
+                <th>Students Assigned</th>
+                <th>Near Washroom</th>
+              </tr>
+            </thead>
+            <tbody id="allocTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+
+function showFeedback(el, msg, type /* 'success' | 'error' */) {
+  el.textContent = msg;
+  el.className = `feedback feedback--show feedback--${type}`;
+}
+function hideFeedback(el) {
+  el.className = 'feedback';
+}
+
+
+function renderClassroomTable(classrooms) {
+  const container = document.getElementById('classroomTable');
+
+  if (!classrooms || classrooms.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">🪑</span>
+        No classrooms yet. Add one above to get started.
+      </div>`;
+    return;
+  }
+
+  let rows = classrooms.map(c => `
+    <tr>
+      <td>${escHtml(c.roomId)}</td>
+      <td>${c.capacity}</td>
+      <td>Floor ${c.floorNo}</td>
+      <td><span class="badge badge--${c.nearWashroom ? 'yes' : 'no'}">${c.nearWashroom ? 'Yes' : 'No'}</span></td>
+    </tr>`).join('');
+
+  container.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Room ID</th>
+            <th>Capacity</th>
+            <th>Floor</th>
+            <th>Near Washroom</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+
+async function addClassroom() {
+  const fb = document.getElementById('addFeedback');
+
+  const roomId      = document.getElementById('roomId').value.trim();
+  const capacity    = document.getElementById('capacity').value.trim();
+  const floorNo     = document.getElementById('floorNo').value.trim();
+  const nearWashroom = document.getElementById('nearWashroom').checked;
+
+  
+  if (!roomId)            return showFeedback(fb, 'Room ID is required.', 'error');
+  if (!capacity || Number(capacity) <= 0 || !Number.isInteger(Number(capacity)))
+                          return showFeedback(fb, 'Capacity must be a positive integer.', 'error');
+  if (floorNo === '' || Number(floorNo) < 0 || !Number.isInteger(Number(floorNo)))
+                          return showFeedback(fb, 'Floor number must be a non-negative integer.', 'error');
+
+  try {
+    const res = await fetch('/api/classrooms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roomId, capacity: Number(capacity), floorNo: Number(floorNo), nearWashroom })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showFeedback(fb, data.message, 'success');
+      // clear form
+      document.getElementById('roomId').value = '';
+      document.getElementById('capacity').value = '';
+      document.getElementById('floorNo').value = '';
+      document.getElementById('nearWashroom').checked = false;
+      // refresh list
+      await refreshClassroomList();
+    } else {
+      showFeedback(fb, data.message, 'error');
+    }
+  } catch (_) {
+    showFeedback(fb, 'Network error – server may be down.', 'error');
+  }
+}
+
+
+
+async function refreshClassroomList() {
+  try {
+    const res  = await fetch('/api/classrooms');
+    const data = await res.json();
+    renderClassroomTable(data.data);
+  } catch (_) {
+    renderClassroomTable([]);
+  }
+}
+
+
+async function allocateExam() {
+  const input      = document.getElementById('totalStudents').value.trim();
+  const errorPanel = document.getElementById('allocError');
+  const errorMsg   = document.getElementById('allocErrorMsg');
+  const resultPanel= document.getElementById('allocResult');
+
+ 
+  errorPanel.className  = 'error-panel';
+  resultPanel.className = 'result-panel';
+
+  
+  if (!input || Number(input) <= 0 || !Number.isInteger(Number(input))) {
+    errorMsg.textContent = 'Please enter a valid positive integer for total students.';
+    errorPanel.className = 'error-panel error-panel--show';
+    return;
+  }
+
+  try {
+    const res  = await fetch('/api/classrooms/allocate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ totalStudents: Number(input) })
+    });
+    const data = await res.json();
+
+    if (!data.success) {
+      errorMsg.textContent = data.message;
+      errorPanel.className = 'error-panel error-panel--show';
+      return;
+    }
+
+    
+    const alloc = data.data;
+
+    document.getElementById('statStudents').textContent = alloc.totalStudents;
+    document.getElementById('statRooms').textContent    = alloc.roomsUsed;
+    // sum total seats across allocated rooms
+    const totalSeats = alloc.allocated.reduce((s, r) => s + r.capacity, 0);
+    document.getElementById('statSeats').textContent    = totalSeats;
+
+    const tbody = document.getElementById('allocTableBody');
+    tbody.innerHTML = alloc.allocated.map(r => `
+      <tr>
+        <td>${escHtml(r.roomId)}</td>
+        <td>Floor ${r.floorNo}</td>
+        <td>${r.capacity}</td>
+        <td><strong>${r.studentsAssigned}</strong></td>
+        <td><span class="badge badge--${r.nearWashroom ? 'yes' : 'no'}">${r.nearWashroom ? 'Yes' : 'No'}</span></td>
+      </tr>`).join('');
+
+    resultPanel.className = 'result-panel result-panel--show';
+
+  } catch (_) {
+    errorMsg.textContent = 'Network error – server may be down.';
+    errorPanel.className = 'error-panel error-panel--show';
+  }
+}
+
+
+refreshClassroomList();
+</script>
+<footer class="site-footer">
+  <p>© 2026 Ashutosh Patel. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
